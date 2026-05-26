@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Монитор давления</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .card { border: 1px solid #ddd; padding: 20px; margin: 10px 0; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
 </head>
 <body>
+    <h1>Монитор артериального давления</h1>
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <p class="{{ category }}">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="card">
+        <h2>Последние показания</h2>
+        {% if pressure %}
+            <p>Дата: {{ pressure.date.strftime('%d.%m.%Y %H:%M') }}</p>
+            <p>Систолическое: <strong>{{ pressure.systolic }}</strong> мм. рт. ст.</p>
+            <p>Диастолическое: <strong>{{ pressure.diastolic }}</strong> мм. рт. ст.</p>
+            <p>Среднее АД: <strong>{{ "%.2f"|format(pressure.mean_pressure) }}</strong> мм. рт. ст.</p>
+        {% else %}
+            <p>Пока нет данных. Добавьте первые показания!</p>
+        {% endif %}
+    </div>  <!-- Закрыт div -->
+
+    <p><a href="{{ url_for('add_pressure') }}">Добавить показания</a> |
+       <a href="{{ url_for('statistics') }}">Посмотреть статистику</a></p>
 </body>
 </html>
