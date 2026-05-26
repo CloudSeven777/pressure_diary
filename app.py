@@ -1,6 +1,7 @@
 from flask import Flask
 from models import db, BloodPressure
 import os
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 def create_app():
     app = Flask(__name__)
