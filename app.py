@@ -1,11 +1,12 @@
 from flask import Flask
-from models import db, BloodPressure
+from models import db
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(basedir, "data", "pressure_data.db")}'
+    app.config['SQLALCHEMY_DATABASE_URI'] = \
+        f"sqlite:///{os.path.join(basedir, 'data', 'pressure_data.db')}"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Инициализация базы данных
