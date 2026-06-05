@@ -24,10 +24,11 @@ def add_pressure():
         pulse = request.form.get('pulse')
 
         new_record = PressureRecord(
-            systolic=systolic,
-            diastolic=diastolic,
-            pulse=pulse
+            systolic=int(systolic),
+            diastolic=int(diastolic),
+            pulse=int(pulse)
         )
+
 
         db.session.add(new_record)
         db.session.commit()
