@@ -6,5 +6,50 @@
 </head>
 <body>
 
+<h1>Статистика давления</h1>
+
+<table>
+
+<tr>
+    <th>Период</th>
+    <th>Среднее</th>
+    <th>Максимальное</th>
+    <th>Минимальное</th>
+</tr>
+
+<tr>
+    <td>Неделя</td>
+    <td>{{ stats.week.avg_sys }}/{{ stats.week.avg_dia if stats.week else '-' }}</td>
+    <td>{{ stats.week.max_sys }}/{{ stats.week.max_dia if stats.week else '-' }}</td>
+    <td>{{ stats.week.min_sys }}/{{ stats.week.min_dia if stats.week else '-' }}</td>
+</tr>
+
+<tr>
+    <td>Месяц</td>
+    <td>{{ stats.month.avg_sys }}/{{ stats.month.avg_dia if stats.month else '-' }}</td>
+    <td>{{ stats.month.max_sys }}/{{ stats.month.max_dia if stats.month else '-' }}</td>
+    <td>{{ stats.month.min_sys }}/{{ stats.month.min_dia if stats.month else '-' }}</td>
+</tr>
+
+<tr>
+    <td>Год</td>
+    <td>{{ stats.year.avg_sys }}/{{ stats.year.avg_dia if stats.year else '-' }}</td>
+    <td>{{ stats.year.max_sys }}/{{ stats.year.max_dia if stats.year else '-' }}</td>
+    <td>{{ stats.year.min_sys }}/{{ stats.year.min_dia if stats.year else '-' }}</td>
+</tr>
+
+<tr>
+    <td>Все время</td>
+    <td>{{ stats.all.avg_sys }}/{{ stats.all.avg_dia if stats.all else '-' }}</td>
+    <td>{{ stats.all.max_sys }}/{{ stats.all.max_dia if stats.all else '-' }}</td>
+    <td>{{ stats.all.min_sys }}/{{ stats.all.min_dia if stats.all else '-' }}</td>
+</tr>
+
+</table>
+
+<br>
+
+<a href="/">← На главную</a>
+
 </body>
 </html>
