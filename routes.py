@@ -1,4 +1,6 @@
 from flask import render_template, request, redirect
+from datetime import datetime, timedelta
+
 from app import app
 from models import db, PressureRecord
 
@@ -34,3 +36,54 @@ def add_pressure():
 
     return render_template('add_pressure.html')
 
+
+
+@app.route('/statistics')
+def statistics():
+
+    now = datetime.now()
+
+    week_date = now - timedelta(days=7)
+    month_date = now - timedelta(days=30)
+    year_date = now - timedelta(days=365)
+
+    week_records = PressureRecord.query.filter(
+        PressureRecord.created_at >= week_date
+    ).all()
+
+    month_records = PressureRecord.query.filter(
+        PressureRecord.created_at >= month_date
+    ).all()
+
+    year_records = PressureRecord.query.filter(
+        PressureRecord.created_at >= year_date
+    ).all()
+
+    all_records = PressureRecord.query.all()
+
+    def calc(records):
+        if not records:
+            return None
+
+        return {
+            "avg_sys": round(sum(r.systolic for r in records) / len(records), 1),
+            "avg_dia": round(sum(r.diastolic for r in records) / len(records), 1),
+
+            "max_sys": max(r.systolic for r in records),
+            "max_dia": max(r.diastolic for r in records),
+
+            "min_sys": min(r.systolic for r in records),
+            "min_dia": min(r.diastolic for r in records),
+        }
+
+    stats = {
+        "week": calc(week_records),
+        "month": calc(month_records),
+        "year": calc(year_records),
+        "all": calc(all_records)
+    }
+
+    return render_template(
+        'statistics.html',
+        stats=stats
+    )
